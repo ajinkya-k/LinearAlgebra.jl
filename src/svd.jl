@@ -245,37 +245,6 @@ svdvals(A::AbstractVector{T}) where {T} = [convert(eigtype(T), norm(A))]
 svdvals(x::Number) = abs(x)
 svdvals(S::SVD{<:Any,T}) where {T} = (S.S)::Vector{T}
 
-"""
-    rank(S::SVD{<:Any, T}; atol::Real=0, rtol::Real=min(n,m)*ϵ) where {T}
-
-Compute the numerical rank of a `n × m` matrix by counting how many singular values are greater 
-than `max(atol, rtol*σ₁)` where `σ₁` is `A`'s largest calculated singular value.
-`atol` and `rtol` are the absolute and relative tolerances, respectively.
-The default relative tolerance is `n*ϵ`, 
-where `n` is the size of the smallest dimension of `A`, 
-and `ϵ` is the [`eps`](@ref) of the element type of `A`.
-!!! note
-    Numerical rank can be a sensitive and imprecise characterization of
-    ill-conditioned matrices with singular values that are close to the threshold
-    tolerance `max(atol, rtol*σ₁)`. In such cases, slight perturbations to the
-    singular-value computation or to the matrix can change the result of `rank`
-    by pushing one or more singular values across the threshold. These variations
-    can even occur due to changes in floating-point errors between different Julia
-    versions, architectures, compilers, or operating systems.
-
-!!! compat "Julia 1.1"
-    The `atol` and `rtol` keyword arguments requires at least Julia 1.1.
-    In Julia 1.0 `rtol` is available as a positional argument, but this
-    will be deprecated in Julia 2.0.
-
-"""
-
-function rank(S::SVD{<:Any,T}; atol::Real = 0.0, rtol::Real = (min(size(S)...)*eps(real(float(one(eltype(S))))))) where {T}
-    svals = getfield(S, :S)
-    tol = max(atol, rtol*svals[1])
-    count(>(tol), svals)
-end
-
 ### SVD least squares ###
 function ldiv!(A::SVD{T}, B::AbstractVecOrMat) where T
     m, n = size(A)

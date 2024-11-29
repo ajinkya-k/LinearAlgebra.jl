@@ -538,10 +538,10 @@ end
 function rank(A::QRPivoted; atol::Real=0, rtol::Real=min(size(A)...) * eps(real(float(one(eltype(A.Q))))) * iszero(atol))
     m = min(size(A)...)
     m == 0 && return 0
-    rdiag = diag(getfield(A, :factors))
-    tol = max(atol, rtol*abs(rdiag[1]))
+    factors = getfield(A, :factors)
+    tol = max(atol, rtol*abs(factors[1,1]))
 
-    return something(findfirst(abs.(rdiag) .<= tol), m+1) - 1
+    return something(findfirst(i -> abs(factors[i,i]) <= tol, 1:m), m+1) - 1
 end
 
 # Julia implementation similar to xgelsy
