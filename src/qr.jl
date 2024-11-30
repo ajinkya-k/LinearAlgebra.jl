@@ -540,7 +540,6 @@ function rank(A::QRPivoted; atol::Real=0, rtol::Real=min(size(A)...) * eps(real(
     m == 0 && return 0
     factors = getfield(A, :factors)
     tol = max(atol, rtol*abs(factors[1,1]))
-
     return something(findfirst(i -> abs(factors[i,i]) <= tol, 1:m), m+1) - 1
 end
 
