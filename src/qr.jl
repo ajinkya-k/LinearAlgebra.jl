@@ -535,7 +535,7 @@ function ldiv!(A::QRCompactWY{T}, B::AbstractMatrix{T}) where {T}
     return B
 end
 
-function rank(A::QRPivoted; atol::Real=0, rtol::Real=min(size(A)...) * eps(real(float(eltype(A.Q)))) * iszero(atol))
+function rank(A::QRPivoted; atol::Real=0, rtol::Real=min(size(A)...) * eps(real(float(eltype(A)))) * iszero(atol))
     m = min(size(A)...)
     m == 0 && return 0
     tol = max(atol, rtol*abs(A.factors[1,1]))
