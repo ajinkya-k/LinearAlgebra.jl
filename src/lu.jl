@@ -133,10 +133,10 @@ U factor:
 
 julia> B = [8 3; 12 3]
 2×2 Matrix{Int64}:
- 8  3
+  8  3
  12  3
 
-julia> F2 = lu!(F,A)
+julia> F2 = lu!(F,B)
 LU{Float64, Matrix{Float64}, Vector{Int64}}
 L factor:
 2×2 Matrix{Float64}:
