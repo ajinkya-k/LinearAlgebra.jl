@@ -934,7 +934,7 @@ end
 function lpdist(x::T, y::T, p::Real) where {T <: AbstractVector}
     length(x) == length(y) || throw(DimensionMismatch("x and y have different lenghts"))
     p < 0 && throw(DomainError("p must be non-negative"))
-    p < 1 || @warn("Technically not a distance metric for 0 < p < 1")
+    p < 1 && @warn("Technically not a distance metric for 0 < p < 1")
 
     # handle inf norm separatey
     if p == Inf
