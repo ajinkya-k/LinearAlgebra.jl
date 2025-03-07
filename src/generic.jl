@@ -907,6 +907,8 @@ function _lpunnorm(x::T, y::T, fn) where {T}
     for i in eachindex(x,y)
         @inbounds r += fn(x[i] - y[i])
     end
+
+    return r
 end
 
 
@@ -940,7 +942,7 @@ function lpdist(x::T, y::T, p::Real) where {T <: AbstractVector}
     if p == Inf
         r = 0.0
         for i in eachindex(x,y)
-            @inbounds r = max(x[i] - y[i], r)
+            @inbounds r = max(abs(x[i] - y[i]), r)
         end
         return r
     elseif iszero(p)
