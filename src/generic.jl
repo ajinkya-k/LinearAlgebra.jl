@@ -921,7 +921,7 @@ function lpdist(x::T, y::T, p::Int) where {T <: AbstractVector}
     elseif p == 2
         fn = abs2
     else
-        fn = x -> abs(u)^p
+        fn = u -> abs(u)^p
     end
     r = _lpunnorm(x, y, fn)
 
