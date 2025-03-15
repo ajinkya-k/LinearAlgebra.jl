@@ -687,11 +687,7 @@ end
     @testset for elty in (Float32, Float64, ComplexF32, ComplexF64)
         local n = 10
         a = randn(elty, n, n)
-        # generate a symmetric positive definite matrix as Q*D*Q',
-        # where Q is orthogonal, and D contains the eigenvalues
-        Q, _ = qr(a)
-        D = Diagonal(rand(real(elty), n) .+ real(oneunit(elty)))
-        A = Matrix(Hermitian(Q*D*Q')) # ensure that the matrix is exactly hermitian
+        A = a'*a + I
         B = rand(elty, n, n)
         D = copy(A)
         C = copy(B)
